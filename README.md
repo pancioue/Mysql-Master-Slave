@@ -23,7 +23,6 @@ https://medium.com/dean-lin/%E5%9C%A8-mysql-5-7-%E8%A7%A3%E6%B1%BA%E4%BA%86%E4%B
 slave_parallel_type    = DATABASE
 slave_parallel_workers = 0
 ```
-這樣表示只有一 個 process 在處理，可是看 Seconds_Behind_Master 參數是0表示沒有延遲  
-可能是作者一瞬間塞太多sql，不過將來如果有遇到db2很卡且查不出原因，可以參考看看
+這樣表示只有一 個 process 在處理，可是看 Seconds_Behind_Master 參數是0表示沒有延遲，可能是作者一瞬間塞太多sql
 
-
+** _目前沒有遇到這樣的狀況，不過若之後有出錯修復，倒是可以留意 Seconds_Behind_Master 的值_ **
