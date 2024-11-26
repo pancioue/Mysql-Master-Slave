@@ -54,27 +54,26 @@ phpmyadmin 狀態會顯示 Last_Error，但可能會比較攏統(也可能一樣
 
 STOP SLAVE VS STOP SLAVE SQL_THREAD
 --------
-* STOP SLAVE;
-停止整个从库复制进程，包括以下两部分：
-IO_THREAD：负责从主库读取二进制日志（binlog）。
-SQL_THREAD：负责执行 IO_THREAD 下载到从库的中继日志（relay log）。
-效果：同时停止 IO 和 SQL 线程。
-用途：通常用于暂停整个从库的同步。
-常见场景：
-数据迁移或维护。
-暂时中断整个同步过程。
+* STOP SLAVE
+  停止整個從庫複製進程，包括以下兩部分：
+  IO_THREAD：負責從主庫讀取二進位日誌（binlog）。
+  SQL_THREAD：負責執行 IO_THREAD 下載到從庫的中繼日誌（relay log）。
+  效果：同時停止 IO 和 SQL 執行緒。
+  用途：通常用於暫停整個從庫的同步。  
+  常見場景：
+  - 資料遷移或維護。
+  - 暫時中斷整個同步過程。
 
+* STOP SLAVE SQL_THREAD
+  僅停止SQL線程，即停止從庫對中繼日誌的執行。
+  IO線程會繼續運行並從主庫拉取新的二進位日誌。
+  用途：用於暫時暫停從庫的 SQL 執行，同時讓日誌同步繼續，以便稍後恢復。  
+  常見場景：
+  - 需要對從庫資料進行分析或操作，避免新日誌幹擾。
+  - 在主庫和從庫之間資料不一致時，用於暫停執行以進行檢查。
 
-* STOP SLAVE SQL_THREAD;
-仅停止SQL线程，即停止从库对中继日志的执行。
-IO线程会继续运行并从主库拉取新的二进制日志。
-用途：用于暂时暂停从库的 SQL 执行，同时让日志同步继续，以便稍后恢复。
-常见场景：
-需要对从库数据进行分析或操作，避免新日志干扰。
-在主库和从库之间数据不一致时，用于暂停执行以进行检查。
-
-* 状态变化
-  执行 SHOW SLAVE STATUS 时，你可以查看以下字段状态：
+* 狀態變化
+  執行 SHOW SLAVE STATUS 時，你可以查看以下欄位狀態：
   `Slave_IO_Running` 和 `Slave_SQL_Running`：
-   - STOP SLAVE：两者都会显示为 No。
-   - STOP SLAVE SQL_THREAD：Slave_SQL_Running 为 No，但 Slave_IO_Running 仍为 Yes。
+   - STOP SLAVE：兩者都會顯示為 No
+   - STOP SLAVE SQL_THREAD：Slave_SQL_Running 為 No，但 Slave_IO_Running 仍為 Yes
