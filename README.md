@@ -77,3 +77,23 @@ STOP SLAVE VS STOP SLAVE SQL_THREAD
   `Slave_IO_Running` 和 `Slave_SQL_Running`：
    - STOP SLAVE：兩者都會顯示為 No
    - STOP SLAVE SQL_THREAD：Slave_SQL_Running 為 No，但 Slave_IO_Running 仍為 Yes
+
+如果真的亂掉(以下並未實際測試過)
+--------
+* 利用 mysqldump 重灌數據
+  ```
+  mysqldump --all-databases --single-transaction --flush-logs --master-data=2 > backup.sql
+  ```
+  --master-data=2 會在生成的 SQL 文件中包含 CHANGE MASTER TO 需要的 MASTER_LOG_FILE 和 MASTER_LOG_POS，這會讓從庫在恢復數據時自動定位正確的主庫狀態。
+* 重新設置主從複製
+  ```
+  STOP SLAVE;
+  ```
+  ```
+  CHANGE MASTER TO
+    MASTER_LOG_FILE = 'mysql-bin.000001',
+    MASTER_LOG_POS = 154;
+  ```
+  ```
+  START SLAVE;
+  ```
