@@ -151,3 +151,15 @@ STOP SLAVE VS STOP SLAVE SQL_THREAD
   `Slave_IO_Running` 和 `Slave_SQL_Running`：
    - STOP SLAVE：兩者都會顯示為 No
    - STOP SLAVE SQL_THREAD：Slave_SQL_Running 為 No，但 Slave_IO_Running 仍為 Yes
+
+- - -
+event 是什麼？
+> binlog 裡的一個記錄單位
+
+它可能是：
+* 一條 SQL
+* 一筆 row change
+* 一個 table mapping
+* 一個 commit
+
+目前主流是 GTID replication
