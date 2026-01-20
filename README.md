@@ -1,3 +1,4 @@
+> Mysql版本: 5  
 > MySQL 主從複寫中，主庫將資料變更以事件寫入 Binary Log，從庫透過 I/O thread 讀取並寫入 Relay Log，再由 SQL thread 執行以同步資料。
 
 # 主從設定
@@ -89,6 +90,14 @@ SHOW SLAVE STATUS\G
 確認：
 * Slave_IO_Running: Yes
 * Slave_SQL_Running: Yes
+
+# 狀況：緊急停止主庫，全部轉移到從庫
+```
+STOP SLAVE;
+SET GLOBAL read_only = OFF;
+SET GLOBAL super_read_only = OFF;   -- 如果有開
+```
+這樣可以不用停止從庫運行，不過之後要再設定主從就要記得把設定檔改掉
 
 
 # 除錯
