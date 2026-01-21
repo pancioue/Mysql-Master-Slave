@@ -121,8 +121,8 @@ START SLAVE;
 可以參考: https://www.cnblogs.com/xuanzhi201111/p/4566451.html  
 這網站列舉了一些壞掉的例子
 
-
-從庫技術上可以指定到某個 binlog 座標繼續開始，
+- - -
+從庫技術上可以指定到某個 binlog 座標繼續開始，  
 但實務上很少「憑空指定」座標；一定要有「可信的對齊依據」
 ```
 CHANGE MASTER TO
