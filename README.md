@@ -1,4 +1,4 @@
-> Mysql版本: 5  
+> Mysql版本: 5.7  
 > MySQL 主從複寫中，主庫將資料變更以事件寫入 Binary Log，從庫透過 I/O thread 讀取並寫入 Relay Log，再由 SQL thread 執行以同步資料。
 
 # 主從設定
